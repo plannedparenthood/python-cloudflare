@@ -3,12 +3,12 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
-import CloudFlare
+from CloudFlare.cloudflare import Cloudflare
 
 import pytest
 
 def test_ips():
-    cf = CloudFlare.CloudFlare()
+    cf = CloudFlare()
     ips = cf.ips.get()
     assert ips
 
