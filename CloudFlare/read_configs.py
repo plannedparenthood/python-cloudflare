@@ -1,8 +1,12 @@
 """ reading the config file for Cloudflare API"""
-
+                                   
+import sys
 import os
 import re
-import ConfigParser
+if sys.version_info > (3,):
+    import configparser as ConfigParser
+else:
+    import ConfigParser
 
 def read_configs():
     """ reading the config file for Cloudflare API"""
