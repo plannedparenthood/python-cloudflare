@@ -15,6 +15,29 @@ BASE_URL = 'https://api.cloudflare.com/client/v4'
 
 class CloudFlare(object):
     """ Cloudflare v4 API"""
+    def __init__(self, email=None, token=None, certtoken=None, debug=False,
+                 raw=False):
+        """ Cloudflare v4 API"""
+
+        base_url = BASE_URL
+
+        # class creation values override configuration values
+        [conf_email, conf_token, conf_certtoken, extras] = read_configs()
+
+        if email is None:
+            email = conf_email
+        if token is None:
+            token = conf_token
+        if certtoken is None:
+            certtoken = conf_certtoken
+
+        self._base = self._v4base(email, token, certtoken, base_url, debug, raw)
+
+        # add the API calls
+        api_v4(self)  # todo: This should really be part of the class?
+
+        if extras:
+            api_extras(self, extras)
 
     class _v4base(object):
         """ Cloudflare v4 API"""
@@ -469,26 +492,3 @@ class CloudFlare(object):
                                                  identifier1, identifier2,
                                                  params, data)
 
-    def __init__(self, email=None, token=None, certtoken=None, debug=False,
-                 raw=False):
-        """ Cloudflare v4 API"""
-
-        base_url = BASE_URL
-
-        # class creation values override configuration values
-        [conf_email, conf_token, conf_certtoken, extras] = read_configs()
-
-        if email is None:
-            email = conf_email
-        if token is None:
-            token = conf_token
-        if certtoken is None:
-            certtoken = conf_certtoken
-
-        self._base = self._v4base(email, token, certtoken, base_url, debug, raw)
-
-        # add the API calls
-        api_v4(self)  # todo: This should really be part of the class?
-
-        if extras:
-            api_extras(self, extras)
