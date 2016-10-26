@@ -3,7 +3,7 @@
 
 import sys
 
-from cli4 import cli4
+from cli4.cli4 import cli4
 
 
 def main(args=None):
